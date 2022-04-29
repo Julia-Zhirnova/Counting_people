@@ -17,14 +17,15 @@ def cumulative_object_counting_x_axis(input_video, detection_graph, category_ind
         total_passed_objects = 0              
 
         # input video
-        cap = cv2.VideoCapture(input_video)
+        cap = cv2.VideoCapture(0)
 
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
         fps = int(cap.get(cv2.CAP_PROP_FPS))
 
         fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        output_movie = cv2.VideoWriter('the_output.avi', fourcc, fps, (width, height))
+        #output_movie = cv2.VideoWriter('the_output.avi', fourcc, fps, (width, height))
+
 
         total_passed_objects = 0
         color = "waiting..."
@@ -43,7 +44,7 @@ def cumulative_object_counting_x_axis(input_video, detection_graph, category_ind
             num_detections = detection_graph.get_tensor_by_name('num_detections:0')
 
             # for all the frames that are extracted from input video
-            while(cap.isOpened()):
+            while(True):
                 ret, frame = cap.read()                
 
                 if not  ret:
@@ -107,8 +108,8 @@ def cumulative_object_counting_x_axis(input_video, detection_graph, category_ind
                     2,
                     cv2.LINE_AA,
                     )
-
-                output_movie.write(input_frame)
+                cv2.imshow('Videoout', input_frame)
+                #output_movie.write(input_frame)
                 print ("writing frame")
                 #cv2.imshow('object counting',input_frame)
 
