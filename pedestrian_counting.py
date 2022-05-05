@@ -9,7 +9,7 @@ import tensorflow as tf
 
 # Object detection imports
 from utils import backbone
-from api import object_counting_api
+from NEURO.api import object_counting_api
 import cv2
 
 
@@ -28,7 +28,7 @@ cap = cv2.VideoCapture(0)
 
 while (True):
     ret, frame = cap.read()
-    cv2.imshow('Video', frame)
+    #cv2.imshow('Video', frame)
 
     object_counting_api.cumulative_object_counting_x_axis(frame, detection_graph, category_index,
                                                           is_color_recognition_enabled, roi, deviation,
