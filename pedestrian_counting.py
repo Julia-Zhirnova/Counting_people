@@ -5,13 +5,15 @@
 #----------------------------------------------
 
 # Imports
-import tensorflow as tf
 
 # Object detection imports
+import cv2
 from utils import backbone
 from NEURO.api import object_counting_api
-import cv2
+#from NEURO.api.sort import *
 
+#create instance of SORT
+#mot_tracker = Sort()
 
 
 #input_video = "./input_images_and_videos/pedestrian_survaillance.mp4"
@@ -31,8 +33,12 @@ while (True):
     #cv2.imshow('Video', frame)
 
     object_counting_api.cumulative_object_counting_x_axis(frame, detection_graph, category_index,
-                                                          is_color_recognition_enabled, roi, deviation,
-                                                          custom_object_name)  # counting all the objects
+     is_color_recognition_enabled, roi, deviation,
+        custom_object_name)  # counting all the objects
+    # update SORT
+    #track_bbs_ids = mot_tracker.update(object_counting_api.cumulative_object_counting_x_axis(frame, detection_graph, category_index,
+     #                                                     is_color_recognition_enabled, roi, deviation,
+      #                                                    custom_object_name))  # counting all the objects)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break

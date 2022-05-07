@@ -9,13 +9,14 @@ import csv
 import cv2
 import numpy as np
 from utils import visualization_utils as vis_util
+from NEURO.api.sort import *
 
 # Variables
 total_passed_objects = 0  # using it to count objects
 
 def cumulative_object_counting_x_axis(input_video, detection_graph, category_index, is_color_recognition_enabled, roi, deviation, custom_object_name):
-        total_passed_objects = 0              
-
+        total_passed_objects = 0
+        mot_tracker = Sort()
         # input video
         cap = cv2.VideoCapture(0)
 
@@ -60,7 +61,8 @@ def cumulative_object_counting_x_axis(input_video, detection_graph, category_ind
                 (boxes, scores, classes, num) = sess.run(
                     [detection_boxes, detection_scores, detection_classes, num_detections],
                     feed_dict={image_tensor: image_np_expanded})
-
+                # update SORT
+                track_bbs_ids = mot_tracker.update(np.squeeze(boxes))
                 # insert information text to video frame
                 font = cv2.FONT_HERSHEY_SIMPLEX
 
